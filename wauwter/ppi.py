@@ -11,7 +11,7 @@ from scipy.signal import correlate
 from scipy.ndimage import gaussian_filter1d
 #from Python.pybold_master.pybold.hrf_model import spm_hrf
 #from Python.pybold_master.pybold.bold_signal import deconv
-from .wauwterhrf import gloverhrf,gammahrf
+from Python.python_scripts.wauwterfmri import gloverhrf,gammahrf
 
 # def bold_deconvolve(timeseries,hrf=None,TR=1,nb_iter=100):
 #     if hrf is None:
@@ -100,7 +100,7 @@ def gppi_c(designmatrix,seedtimeseries,contrastmatrix,TR=1,cc_threshold=1,dm_thr
         
     return ppi_mat
 
-def gppi_hrfup(designmatrix,seedtimeseries,hrf,cc_threshold=0.8,dm_threshold=0.1,tshift=-10,posmagnitude=0.5,negmagnitude=-0.5):
+def gppi_hrfup(designmatrix,seedtimeseries,hrf,cc_threshold=0.0,dm_threshold=0.0,tshift=0,posmagnitude=1.0,negmagnitude=0.0):
     
     hrf/=hrf.max()
     hrf0=np.zeros(len(seedtimeseries),dtype=np.float32)
