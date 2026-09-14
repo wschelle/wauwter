@@ -7,8 +7,9 @@ Created on Fri Jan  9 09:48:22 2026
 """
 import os
 import sys
-from .wauwternifti import readnii
-from .wauwterfmri import loadmp
+os.chdir('/project/3017081.01/required/')
+from Python.python_scripts.wauwternifti import readnii
+from Python.python_scripts.wauwterfmri import loadmp
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
@@ -17,6 +18,12 @@ orig_nii=sys.argv[1]
 proc_nii=sys.argv[2]
 mpfile1=sys.argv[3]
 mpfile2=sys.argv[4]
+
+# run='run-36'
+# orig_nii='/home/control/wousch/Documents/ARCHIE_sub07_ses01/nii/func/sub07_'+run+'/sub07_'+run+'.nii.gz'
+# proc_nii='/home/control/wousch/Documents/ARCHIE_sub07_ses01/nii/func/sub07_'+run+'/sub07_'+run+'_prep.nii.gz'
+# mpfile1='/home/control/wousch/Documents/ARCHIE_sub07_ses01/nii/func/sub07_'+run+'/sub07_'+run+'_MCMOCOparams_mp.csv'
+# mpfile2='/home/control/wousch/Documents/ARCHIE_sub07_ses01/nii/func/sub07_'+run+'/sub07_'+run+'_MCMOCOparams_mp_disp.csv'
 
 data0,hdr0 = readnii(orig_nii,scaling=False)
 data1,hdr1 = readnii(proc_nii,scaling=False)
@@ -50,7 +57,7 @@ def get_random_brain_voxels(data, num_voxels=10, intensity_threshold=1000):
 
     return random_voxels
 
-def plot_voxel_timeseries(data, voxels=None, start=0, stop=None, title="Voxel Time Series"):
+def plot_voxel_timeseries(data, voxels=None, start=0, stop=265, title="Voxel Time Series"):
     """Plot time series for selected voxels."""
     if voxels is None:
         # Pick a few random voxels
@@ -59,8 +66,6 @@ def plot_voxel_timeseries(data, voxels=None, start=0, stop=None, title="Voxel Ti
         #           (data.shape[0]//3, data.shape[1]//3, data.shape[2]//3)]
         voxels = get_random_brain_voxels(data)
     plt.figure(figsize=(12, 6))
-    if stop is None:
-        stop=data.shape[3]
     for i, (x, y, z) in enumerate(voxels):
         ts = data[x, y, z, start:stop]
         plt.plot(ts, label=f'Voxel {i+1} ({x}, {y}, {z})')
